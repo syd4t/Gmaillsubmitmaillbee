@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MaillBee: জিমেইল বিক্রি করে ইনকাম করুন" />
+  <title>MaillBee</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ff0080, #7928ca, #2afadf);
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    .header::before {
+      content: "🐝";
+      font-size: 1.2em;
+      margin-right: 10px;
+      animation: buzz 1s infinite alternate;
+    }
+
+    @keyframes buzz {
+      from { transform: rotate(-10deg); }
+      to { transform: rotate(10deg); }
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .service {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 10px;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .service:hover {
+      transform: scale(1.05);
+    }
+
+    .service img {
+      width: 35px;
+      height: 35px;
+    }
+
+    .service p {
+      margin-top: 8px;
+      font-size: 0.9em;
+    }
+
+    .notice {
+      background: rgba(255,255,255,0.2);
+      margin: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      background: white;
+      border-radius: 20px 20px 0 0;
+      overflow: hidden;
+    }
+
+    .nav-item {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      color: #7e22ce;
+      font-weight: bold;
+    }
+
+    .qr-button {
+      width: 65px;
+      height: 65px;
+      background: linear-gradient(to right, #ff0080, #7928ca);
+      border-radius: 50%;
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5em;
+      border: 4px solid white;
+    }
+
+    .qr-button::before {
+      content: "🐝";
+    }
+
+    .form-popup {
+      background: rgba(255,255,255,0.95);
+      color: #333;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 999;
+      display: none;
+    }
+
+    .form-popup h3 {
+      margin-top: 0;
+      color: #7e22ce;
+    }
+
+    .form-popup input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .form-popup button {
+      background: #7e22ce;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .form-popup .close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.2em;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      color: #7e22ce;
+    }
+
+    @media (max-width: 600px) {
+      .services {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .bee {
+      position: absolute;
+      font-size: 20px;
+      animation: fly 10s linear infinite;
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translateX(-100px) translateY(0px) rotate(0deg);
+      }
+      100% {
+        transform: translateX(110vw) translateY(50vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">MaillBee</div>
+
+  <div class="services">
+    <div class="service" onclick="showForm()">
+      <img src="https://img.icons8.com/ios-filled/50/sell.png" />
+      <p>Gmail বিক্রি</p>
+    </div>
+    <div class="service" onclick="window.location.href='https://syd4t.github.io/maillbeesub/'">
+      <img src="https://img.icons8.com/ios-filled/50/information.png" />
+      <p>কাজের বিস্তারিত</p>
+    </div>
+    <div class="service" onclick="openWhatsApp('আমার একাউন্ট সাবমিট টাইম ২৪ ঘণ্টা হইয়ে গেছে পেমেন্ট দিন')">
+      <img src="https://img.icons8.com/ios-filled/50/money-transfer.png" />
+      <p>পেমেন্ট রিকোয়েস্ট</p>
+    </div>
+    <div class="service" onclick="openWhatsApp('আজকের রেট কত?')">
+      <img src="https://img.icons8.com/ios-filled/50/question-mark.png" />
+      <p>Today Rate</p>
+    </div>
+  </div>
+
+  <div class="notice">
+    জিমেইল গুলা নেওয়া /পেমেন্ট আমরা হোয়াটস্যাপ দিয়ে পরিচালনা করছি <strong>“জিমেইল বিক্রি করে ইনকাম করুন”</strong>
+    <div id="sellText" style="margin-top:10px;font-weight:bold;color:#fff;font-size:1.2em;"></div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item">Home</div>
+    <div class="qr-button"></div>
+    <div class="nav-item">More</div>
+  </div>
+
+  <div class="form-popup" id="sellForm">
+    <button class="close-btn" onclick="closeForm()">×</button>
+    <h3>📧 Gmail Sell Request</h3>
+    <input type="text" id="gmail" placeholder="Gmail লিখুন" />
+    <input type="password" id="password" placeholder="Password লিখুন" />
+    <button onclick="submitSell()">সাবমিট করুন</button>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById("sellText").textContent = '“জিমেইল বিক্রি করে ইনকাম করুন”';
+    }, 2000);
+
+    function openWhatsApp(message) {
+      const phone = "01938975564";
+      window.open(`https://wa.me/88${phone}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    function showForm() {
+      document.getElementById("sellForm").style.display = 'block';
+    }
+
+    function closeForm() {
+      document.getElementById("sellForm").style.display = 'none';
+    }
+
+    function submitSell() {
+      const gmail = document.getElementById("gmail").value.trim();
+      const password = document.getElementById("password").value.trim();
+      if (gmail && password) {
+        const message = `📧 Gmail Sell Request\n--------------------------\nGmail: ${gmail}\nPassword: ${password}`;
+        openWhatsApp(message);
+        closeForm();
+      } else {
+        alert("সব তথ্য পূরণ করুন");
+      }
+    }
+
+    // Add flying bees
+    for (let i = 0; i < 10; i++) {
+      const bee = document.createElement("div");
+      bee.className = "bee";
+      bee.style.top = Math.random() * 100 + "vh";
+      bee.style.left = Math.random() * 100 + "vw";
+      bee.style.animationDuration = (6 + Math.random() * 5) + "s";
+      bee.innerText = "🐝";
+      document.body.appendChild(bee);
+    }
+  </script>
+</body>
+</html>
